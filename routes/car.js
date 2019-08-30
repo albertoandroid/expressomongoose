@@ -1,22 +1,21 @@
 const mongosee = require('mongoose')
 const express = require('express')
+const Car = require('../models/car')
 const router = express.Router()
 const { check, validationResult } = require('express-validator');
 
-router.get('/list',(req, res)=>{
-    res.send(['BMW X1', 'AUDI A3', 'Mercedes Clase A'])
+router.get('/list', async(req, res)=>{
+    const cars = await Car.find()
+    res.send(cars)
 })
 
 router.get('/id/:id',(req, res)=>{
     res.send(req.params.id)
 })
 
-router.get('/:company/:model',(req, res)=>{
-    res.send(req.params)
-})
-
 router.get('/', (req, res)=> {
-    res.send(coches)
+    const cars = await Car.find()
+    res.send(cars)
 })
 
 router.get('/:company', (req, res)=>{
