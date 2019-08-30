@@ -65,15 +65,14 @@ router.put('/:id', [
     res.status(204).send()
 })
 
-router.delete('/:id', (req, res)=>{
-    const coche = coches.find(coche=> coche.id === parseInt(req.params.id))
+router.delete('/:id', async(req, res)=>{
 
-    if(!coche){
+    const car = await Car.findByIdAndDelete(req.params.id)
+
+    if(!car){
         return res.status(404).send('El coche con ese ID no esta, no se puede borrar')
     }
 
-    const index = coches.indexOf(coche)
-    coches.splice(index,1)
     res.status(200).send('coche borrado')
 
 })
