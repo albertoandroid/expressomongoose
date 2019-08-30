@@ -4,29 +4,18 @@ const Car = require('../models/car')
 const router = express.Router()
 const { check, validationResult } = require('express-validator');
 
-router.get('/list', async(req, res)=>{
+router.get('/', async(req, res)=> {
     const cars = await Car.find()
     res.send(cars)
 })
 
-router.get('/id/:id',(req, res)=>{
-    res.send(req.params.id)
+router.get('/:id', async(req, res)=>{
+    const car = await Car.findById(req.params.id)
+    if(!car) return res.status(404).send('No hemos encontrado un coche con ese ID')
+    res.send(car)
 })
 
-router.get('/', (req, res)=> {
-    const cars = await Car.find()
-    res.send(cars)
-})
 
-router.get('/:company', (req, res)=>{
-    const coche = coches.find(coche => coche.company === req.params.company)
-
-    if(!coche){
-        res.status(404).send('No tenemos ningun coche de esa marca')
-    }else{
-        res.send(coche)
-    }
-})
 
 router.post('/', (req, res)=>{
     var carId = coches.length;
