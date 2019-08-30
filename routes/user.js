@@ -35,7 +35,7 @@ router.post('/', [
 })
 
 router.put('/:id', [
-    check('user').isLength({min: 3}),
+    check('name').isLength({min: 3}),
     check('email').isLength({min: 3})
 ], async (req, res)=>{
     const errors = validationResult(req);
