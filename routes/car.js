@@ -1,13 +1,38 @@
+const mongosee = require('mongoose')
 const express = require('express')
-//const app = express()
 const router = express.Router()
 const { check, validationResult } = require('express-validator');
 
-var coches = [
-    {id: 0, company: 'BMW', model: 'X3', year: '2020' },
-    {id: 1, company: 'Audi', model: 'A1', year: '2021' },
-    {id: 2, company: 'Mercedes', model: 'Clase A', year: '2022' }
-]
+const carSchema = new mongosee.Schema({
+    company:{
+        type: String,
+        required: true,
+        uppercase: true,
+        trim: true,
+        minlength: 2,
+        maxlength: 99,
+        enum: ['BMW', 'AUDI', 'SEAT']
+    },
+    model: String,
+    sold: Boolean,
+    price:{
+        type: Number,
+        required: function(){
+            return this.sold
+        }
+    },
+    year: {
+        type: Number,
+        min: 2000,
+        max: 2030,
+    },
+    extras: [String],
+    date: {type: Date, default: Date.now}
+})
+
+const Car = mongosee.model('car', carSchema)
+
+
 
 router.get('/list',(req, res)=>{
     res.send(['BMW X1', 'AUDI A3', 'Mercedes Clase A'])
