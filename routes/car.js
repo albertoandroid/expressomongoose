@@ -27,7 +27,7 @@ router.post('/', [
     const car = new Car({
         company: req.body.company,
         model: req.body.model,
-        year: req.boyd.year,
+        year: req.body.year,
         sold: req.body.sold,
         price: req.body.price,
         extras: req.body.extras
