@@ -5,7 +5,9 @@ const router = express.Router()
 const { check, validationResult } = require('express-validator');
 
 router.get('/', async(req, res)=> {
-    const cars = await Car.find()
+    const cars = await Car
+        .find()
+        .populate('company', 'name country')
     res.send(cars)
 })
 
