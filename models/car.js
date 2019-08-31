@@ -1,6 +1,6 @@
-const mongosee = require('mongoose')
+const mongoose = require('mongoose')
 
-const carSchema = new mongosee.Schema({
+const carSchema = new mongoose.Schema({
     company:{
         type: String,
         required: true,
@@ -27,6 +27,6 @@ const carSchema = new mongosee.Schema({
     date: {type: Date, default: Date.now}
 })
 
-const Car = mongosee.model('car', carSchema)
+const Car = mongoose.model('car', carSchema)
 
 module.exports = Car

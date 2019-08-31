@@ -1,6 +1,6 @@
-const mongosee = require('mongoose')
+const mongoose = require('mongoose')
 
-const userSchema = new mongosee.Schema({
+const userSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true
@@ -10,6 +10,6 @@ const userSchema = new mongosee.Schema({
     date: {type:Date, default:Date.now}
 })
 
-const User = mongosee.model('user', userSchema)
+const User = mongoose.model('user', userSchema)
 
 module.exports = User
