@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const mongosee = require('mongoose')
 const express = require('express')
@@ -40,7 +41,10 @@ router.post('/', [
     })
 
     const result = await user.save()
-    res.status(201).send({
+
+    const jwtToken = jwt.sign({_id: user._id, name: user.name}, 'password')
+
+    res.status(201).header('Authorization', jwtToken).send({
         _id: user._id,
         name: user.name,
         email: user.email
