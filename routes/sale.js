@@ -3,6 +3,8 @@ const Sale = require('../models/sale')
 const Car = require('../models/car')
 const User = require('../models/user')
 const router = express.Router()
+const mongoose = require('mongoose')
+
 
 router.get('/', async(req, res)=>{
     const sales = await Sale.find()
@@ -31,13 +33,31 @@ router.post('/', async(req, res)=>{
         price: req.body.price
     })
 
+    /*
     const result = await sale.save()
     user.isCustomer = true
     user.save()
     car.sold = true
     car.save()
-    res.status(201).send(result)
+    res.status(201).send(result)*/
 
+    const session = await mongoose.startSession()
+    session.startTransaction()
+    try{
+        const result = await sale.save()
+        user.isCustomer = true
+        user.save()
+        car.sold = true
+        car.save()
+        await session.commitTransaction()
+        session.endSession()
+        res.status(201).send(result)
+    }catch(e){
+        await session.abortTransaction()
+        session.endSession()
+        res.status(500).send(e.message)
+    }
+    
 })
 
 module.exports = router
