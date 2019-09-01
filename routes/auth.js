@@ -22,3 +22,5 @@ router.post('/', [
 
     res.send('Usuario y contreña correcta')
 })
+
+module.exports = router

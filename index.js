@@ -5,11 +5,13 @@ const car = require('./routes/car')
 const user = require('./routes/user')
 const company = require('./routes/company')
 const sale = require('./routes/sale')
+const auth = require('./routes/auth')
 app.use(express.json())
 app.use('/api/cars/', car)
 app.use('/api/user/', user)
 app.use('/api/company/', company)
 app.use('/api/sale/', sale)
+app.use('/api/auth/', auth)
 const port = process.env.PORT || 3003
 app.listen(port, ()=> console.log('Escuchando Puerto: ' + port))
 
