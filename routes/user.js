@@ -32,11 +32,15 @@ router.post('/', [
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        isCustomer: req.body.isCustomer
+        isCustomer: false
     })
 
     const result = await user.save()
-    res.status(201).send(result)
+    res.status(201).send({
+        _id: user._id,
+        name: user.name,
+        email: user.email
+    })
 })
 
 router.put('/:id', [

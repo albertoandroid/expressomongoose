@@ -13,6 +13,6 @@ app.use('/api/sale/', sale)
 const port = process.env.PORT || 3003
 app.listen(port, ()=> console.log('Escuchando Puerto: ' + port))
 
-mongoose.connect('mongodb://localhost/carsdb',{useNewUrlParser:true, useFindAndModify:false})
+mongoose.connect('mongodb://localhost/carsdb',{useNewUrlParser:true, useFindAndModify:false, useCreateIndex: true})
     .then(()=> console.log('Conectado a MongoDb'))
     .catch(erro => console.log('No se ha conectado a MongoDb'))
