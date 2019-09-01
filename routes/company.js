@@ -1,5 +1,5 @@
 const express = require('express')
-const Company = require('../models/company')
+const {Company} = require('../models/company')
 const router = express.Router()
 
 router.get('/', async(req, res)=> {

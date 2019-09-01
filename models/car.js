@@ -1,10 +1,16 @@
 const mongoose = require('mongoose')
+const {companySchema} = require('./company')
 
 const carSchema = new mongoose.Schema({
     company:{
+        type: companySchema,
+        required: true
+    },
+    /*
+    company:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'company'
-    },
+    },*/
     model: String,
     sold: Boolean,
     price:{
