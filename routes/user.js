@@ -17,16 +17,21 @@ router.get('/:id', async(req, res)=>{
 
 router.post('/', [
     check('name').isLength({min: 3}),
-    check('email').isLength({min: 3})
+    check('email').isLength({min: 3}),
+    check('password').isLength({min: 3}),
 ],async(req, res)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
 
-    const user = new User({
+    let user = await User.findOne({email: req.body.email})
+    if(user) return res.status(400).send('Ese usuario ya existe')
+
+    user = new User({
         name: req.body.name,
         email: req.body.email,
+        password: req.body.password,
         isCustomer: req.body.isCustomer
     })
 
