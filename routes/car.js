@@ -18,6 +18,34 @@ router.get('/:id', async(req, res)=>{
     res.send(car)
 })
 
+//POST Modelo de datos Embebido
+router.post('/', [
+    check('year').isLength({min: 3}),
+    check('model').isLength({min: 3})
+],async(req, res)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    const company = await Company.findById(req.body.companyId)
+    if(!company) return res.status(400).send('No tenemos ese fabricante')
+
+    const car = new Car({
+        company: company,
+        model: req.body.model,
+        year: req.body.year,
+        sold: req.body.sold,
+        price: req.body.price,
+        extras: req.body.extras
+    })
+
+    const result = await car.save()
+    res.status(201).send(result)
+})
+
+//POST Modelo de datos Normalizado
+/*
 router.post('/', [
     check('company').isLength({min: 3}),
     check('model').isLength({min: 3})
@@ -39,7 +67,7 @@ router.post('/', [
     const result = await car.save()
     res.status(201).send(result)
 })
-
+*/
 router.put('/:id', [
     check('company').isLength({min: 3}),
     check('model').isLength({min: 3})
