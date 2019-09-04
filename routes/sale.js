@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth')
 const express = require('express')
 const Sale = require('../models/sale')
 const Car = require('../models/car')
@@ -11,7 +12,7 @@ router.get('/', async(req, res)=>{
     res.send(sales)
 })
 
-router.post('/', async(req, res)=>{
+router.post('/', auth, async(req, res)=>{
     const user = await User.findById(req.body.userId)
     if(!user) return res.status(400).send('Usuario no existe')
 
