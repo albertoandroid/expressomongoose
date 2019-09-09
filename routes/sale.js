@@ -1,4 +1,5 @@
 const auth = require('../middleware/auth')
+const admin = require('../middleware/admin')
 const express = require('express')
 const Sale = require('../models/sale')
 const Car = require('../models/car')
@@ -7,7 +8,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 
 
-router.get('/', async(req, res)=>{
+router.get('/', [auth, admin], async(req, res)=>{
     const sales = await Sale.find()
     res.send(sales)
 })

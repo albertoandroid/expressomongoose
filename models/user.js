@@ -16,11 +16,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    isAdmin: Boolean,
     date: {type:Date, default:Date.now}
 })
 
 userSchema.methods.generateJWT = function(){
-    return jwt.sign({_id: this._id, name: this.name}, process.env.SECRET_KEY_JWT_CAR_API)
+    return jwt.sign({
+        _id: this._id,
+        name: this.name,
+        isAdmin: this.isAdmin
+    }, process.env.SECRET_KEY_JWT_CAR_API)
 }
 
 const User = mongoose.model('user', userSchema)
