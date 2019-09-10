@@ -3,12 +3,13 @@ const express = require('express')
 const Car = require('../models/car')
 const Role = require('../helpers/role')
 const autorize = require('../middleware/role')
+const auth = require('../middleware/auth')
 const {Company} = require('../models/company')
 
 const router = express.Router()
 const { check, validationResult } = require('express-validator');
 
-router.get('/', [auth, autorize([Role.Admin, Role.User])],async(req, res)=> {
+router.get('/', [auth, autorize([Role.Admin])],async(req, res)=> {
     const cars = await Car
         .find()
         //.populate('company', 'name country')
